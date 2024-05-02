@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orders</title>
+  <link rel="stylesheet" href="navbar.css">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="cards.css">
+</head>
+
+<body>
+  <hr color="purple">
+  <ul class="topnav">
+    <li><a href="index.html"></a></li>
+    <li class="right"><a id="cart">Cart: 0</a></li>
+    <li class="right"><a href="login.html"><img src="loginimage.png" style="height: 35px; margin-top: -6px;"></a></li>
+    <li class="right"><a>Help</a></li>
+    <li class="right"><a href="orders.html">Track Order</a></li>
+  </ul>
+  <h2>My Orders</h2>
+  <hr color="gray">
+
+  <div class="flowers">
+    <div id="list" class="cards"></div>
+  </div>
+  <script>
+    let host = "https://c322final.onrender.com"
+    // Function to send a GET request to the backend and append orders to the list
+    async function fetchOrders() {
+      try {
+        const response = await fetch(host + '/orders/123');
+        const orders = await response.json();
+
+        const list = document.getElementById('list');
+        orders.forEach(order => {
+          const card = document.createElement('div');
+          card.classList.add('card');
+
+          const orderInfo = document.createElement('p');
+
+          const orderIdSpan = document.createElement('span');
+          orderIdSpan.textContent = `Order ID: ${order.id}`;
+          orderInfo.appendChild(orderIdSpan);
+          orderInfo.appendChild(document.createElement('br'));
+
+          const flowerSpan = document.createElement('span');
+          flowerSpan.textContent = `Flower: ${order.flowerName}`;
+          orderInfo.appendChild(flowerSpan);
+          orderInfo.appendChild(document.createElement('br'));
+
+          const costSpan = document.createElement('span');
+          costSpan.textContent = `Cost: ${order.cost}`;
+          orderInfo.appendChild(costSpan);
+          orderInfo.appendChild(document.createElement('br'));
+
+          const statusSpan = document.createElement('span');
+          statusSpan.textContent = `Status: ${order.status}`;
+          orderInfo.appendChild(statusSpan);
+          orderInfo.appendChild(document.createElement('br'));
+
+          const customerSpan = document.createElement('span');
+          customerSpan.textContent = `Customer: ${order.firstName} ${order.lastName}`;
+          orderInfo.appendChild(customerSpan);
+
+          document.getElementById('list').appendChild(orderInfo);
+
+          card.appendChild(orderInfo);
+          list.appendChild(card);
+        });
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    }
+
+    // Call the fetchOrders function when the page loads
+    window.addEventListener('DOMContentLoaded', fetchOrders);
+  </script>
+</body>
+
+</html>

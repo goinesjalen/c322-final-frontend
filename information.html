@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Information</title>
+  <link rel="stylesheet" href="navbar.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <hr color="purple">
+  <ul class="topnav">
+    <li><a href="index.html"></a></li>
+  </ul>
+
+  <form id="top">
+    <div style="text-align: center;">
+    </div>
+    <div class="button-container">
+      <a onclick="login()" class="button">Log In</a>
+      <a onclick="login()" class="button">Sign Up</a>
+    </div>
+  </form>
+
+  <h2 style="display: flex; justify-content: space-between;" id="name"></h2>
+
+  <div style="height: 100px; background-color: white;">
+    <div class="flowers">
+      <div id="list" class="cards"></div>
+    </div>
+  </div>
+  <div id="date"></div>
+
+
+  <h2 style="text-align: center;">Delivery Information</h2>
+
+  <form action="#" method="post" style="text-align: center;">
+    <label for="firstName">First Name*:</label><br>
+    <input type="text" id="firstName" name="firstName" required><br><br>
+
+    <label for="lastName">Last Name*:</label><br>
+    <input type="text" id="lastName" name="lastName" required><br><br>
+
+    <label for="relationship">Relationship*:</label><br>
+    <select id="relationship" name="relationship" required>
+      <option value="">Select</option>
+      <option value="Self">Self</option>
+      <option value="Friend">Friend</option>
+      <option value="Family">Family</option>
+      <option value="Other">Other</option>
+    </select><br><br>
+
+    <label for="address">Address*:</label><br>
+    <input type="text" id="address" name="address" required>
+    <p style="color: green;">We cannot ship to PO Boxes</p>
+    <br>
+
+    <label for="apartment">Apt./Suite:</label><br>
+    <input type="text" id="apartment" name="apartment"><br>
+
+    <label for="city">City*:</label><br>
+    <input type="text" id="city" name="city" required><br><br>
+
+    <label for="state">State*:</label><br>
+    <input type="text" id="state" name="state" required><br><br>
+
+    <label for="zipCode">Zip Code*:</label><br>
+    <input type="text" id="zipCode" name="zipCode" required><br><br>
+
+  </form>
+
+  <div style="text-align: center;">
+    <button
+      style="background-color: darkgreen; color: white; text-align: center; align-content: center; width: 100px; height: 30px;"
+      onclick="button()">Continue</button>
+  </div>
+  <script>
+    let host = "https://c322final.onrender.com";
+    let curFlowerId = window.localStorage.getItem("selectedFlower")
+    let flowers = []
+    let list = document.getElementById("list")
+
+    if (window.localStorage.getItem("loggedin")) {
+      document.getElementById("top").style.display = "none"
+    }
+
+    function login() {
+      window.localStorage.setItem("previous", "information.html")
+      window.location.href = "login.html"
+    }
+
+    function button() {
+
+      let firstName = document.getElementById("firstName").value
+      window.localStorage.setItem("firstName", firstName)
+      let lastName = document.getElementById("lastName").value
+      window.localStorage.setItem("lastName", lastName)
+      let relationship = document.getElementById("relationship").value
+      window.localStorage.setItem("relationship", relationship)
+      let address = document.getElementById("address").value
+      window.localStorage.setItem("address", address)
+      let apartment = document.getElementById("apartment").value
+      window.localStorage.setItem("apartment", apartment)
+      let city = document.getElementById("city").value
+      window.localStorage.setItem("city", city)
+      let state = document.getElementById("state").value
+      window.localStorage.setItem("state", state)
+      let zipCode = document.getElementById("zipCode").value
+      window.localStorage.setItem("zipCode", zipCode)
+
+      window.location.href = "placeorder.html"
+
+
+
+    }
+
+
+
+
+  </script>
+
+
+
+</body>
+
+</html>

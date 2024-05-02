@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order</title>
+  </head>
+  <body>
+    <hr color="purple">
+    <ul class="topnav">
+    </ul>
+  
+    <div class="header">
+        <h1>Order Summary</h1>
+        <div class="flowers">
+            <div id="list" class="cards"></div>
+        </div>
+    </div>
+    
+    <div class="order-details" style="margin-left: auto; margin-right: auto; text-align: left; width: 50%;">
+        <h2>Delivery Date:</h2>
+        <p id="date">[Delivery Date]</p>
+        
+        <h2>Item Pricing:</h2>
+        <p id="price">[Item Pricing Details]</p>
+        
+        <h2>Delivery Address:</h2>
+        <p id="name">[Name]</p>
+        <p id="address">[Address]</p>
+        <p id="city">[City]</p>
+    </div>
+    
+    
+    <div class="order-summary">
+        <h4 id="savings">You are saving $0.00 on this order!</h4>
+        <div class="total-section">
+            <p id="subtotal">Subtotal: [Subtotal Amount]</p>
+            <p id="delivery">Delivery Amount: $25.00</p>
+            <p id="discount" style="color: green;">Delivery Discount: [Delivery Discount Amount]</p>
+            <p>Tax: $0.00</p>
+            <h3 id="total">Order Total: [Order Total Amount]</h3>
+        </div>
+    </div>
+    <button id="placeOrderBtn" onclick="placeOrder()">Place Order</button>
+
+    <script>
+      let host = "https://c322final.onrender.com";
+
+      async function placeOrder() {
+            try {
+                const token = window.localStorage.getItem("token");
+
+                const requestBody = {
+                    id: window.localStorage.getItem("selectedFlower"),
+                    customerId: 123,
+                    flowerName: window.localStorage.getItem("selectedFlowerName"),
+                    cost: window.localStorage.getItem("price"),
+                    firstName: window.localStorage.getItem("firstName"),
+                    lastName: window.localStorage.getItem("lastName"),
+                    status: "Submitted"
+                };
+
+                const response = await fetch(host + "/orders", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + token
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to place order: " + response.statusText);
+                }
+
+                alert("Order placed successfully!");
+            } catch (error) {
+                console.error("Error placing order:", error);
+                alert("Failed to place order. Please try again.");
+            }
+        }
+
+      let date = document.getElementById("date")
+      date.innerHTML = window.localStorage.getItem("deliveryDate")
+      let price = document.getElementById("price")
+      price.innerHTML = "$" + window.localStorage.getItem("price")
+      let name = document.getElementById("name")
+      name.innerHTML = window.localStorage.getItem("firstName") + " " + window.localStorage.getItem("lastName")
+      let address = document.getElementById("address")
+      address.innerHTML = window.localStorage.getItem("address") + " " + window.localStorage.getItem("apartment")
+      let city = document.getElementById("city")
+      city.innerHTML = window.localStorage.getItem("city") + ", " + window.localStorage.getItem("state") + " " + window.localStorage.getItem("zipCode")
+
+      let save = 0.00
+      if (window.localStorage.getItem("loggedin")) {
+        save = 10.00
+      }
+      let savings = document.getElementById("savings")
+      savings.innerHTML = "You are saving $" + save + ".00 on this order!"
+
+      let cost = parseInt(window.localStorage.getItem("price")) + save
+      let subtotal = document.getElementById("subtotal")
+      subtotal.innerHTML = "Subtotal: $" + cost + ".00"
+
+      let discount = document.getElementById("discount")
+      discount.innerHTML = "Delivery Discount: -$" + save + ".00"
+
+      let tot = parseInt(window.localStorage.getItem("price")) + 25
+      let total = document.getElementById("total")
+      total.innerHTML = "Order Total: $" + tot + ".00"
+ 
+    </script>
+
+  </body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Choose flower</title>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="cards.css">
+  </head>
+  <body>
+    <hr color="purple">
+    <ul class="topnav">
+        <li class="right"><a id="cart">Cart: 0</a></li>
+        <li class="right"><a href="login.html"><img src="loginimage.png" style="height: 35px; margin-top: -6px;"></a></li>
+        <li class="right"><a >Help</a></li>
+        <li class="right"><a href="orders.html">Track Order</a></li>
+      </ul>
+ 
+    <div class="contentcenter">
+        <div class="contentleft">
+            <p>________</p>
+            <p>Shop flowers</p>
+        </div>
+        <div class="contentright">
+            <img src="flowers.jpg">
+        </div>
+    </div>
+
+
+
+    <ul class="topnav">
+        <li>FILTER BY:&nbsp;&nbsp;</li>
+        <li><select name="type">
+            <option value="type">Type</option>
+            <option value="mixed">Mixed</option>
+            <option value="lilies">Lilies</option>
+            <option value="roses">Roses</option>
+        </select></li>
+        <li><select name="occasion">
+            <option value="occasion">Occasion</option>
+            <option value="Mother's day">Mother's Day</option>
+            <option value="birthday">Birthday</option>
+            <option value="thank you">Thank You</option>
+        </select></li>
+        <li><select name="color">
+            <option value="color">Color</option>
+            <option value="mixed">Mixed</option>
+            <option value="pink">Pink</option>
+        </select></li>
+        <li class="right"><select name="sort">
+            <option value="low first">Price: Low to High</option>
+            <option value="high first">Price: High to Low</option>
+        </select></li>
+    </ul>
+
+
+    <div class="flowers">
+        <div id="list" class="cards"></div>
+    </div>
+
+
+
+
+
+    <script>src="configuration.js"</script>
+    <script>src="register.js"</script>
+
+
+    <script>
+        let host = "https://c322final.onrender.com";
+        let curFlowerId = 1
+        let flowers = []
+        let list = document.getElementById("list")
+        window.localStorage.setItem("basket", 0);
+        window.localStorage.setItem("previous", "index.html")
+
+        document.getElementById("cart").innerHTML = "Cart: " + window.localStorage.getItem("basket")
+        displayTheFlowers()
+        async function getAll() {
+            const myHeaders = new Headers()
+            myHeaders.append("Authorization", "Bearer " + window.localStorage.getItem("token"))
+
+            let request = {
+                method: "GET",
+                redirect: "follow"
+            }
+            let response = await fetch(host + "/flowers", request)
+            let result = await response.json()
+            return result
+        }
+        async function displayTheFlowers() {
+            if (flowers.length == 0) {
+                flowers = await getAll()
+            }
+
+            list.innerHTML = ""
+
+            for (let flower of flowers) {
+                let div = document.createElement("div")
+                div.id = `${flower.id}`
+                div.onclick = function () {
+                    curFlowerId = flower.id
+                    window.localStorage.setItem("selectedFlower", curFlowerId)
+                    document.getElementById("cart").innerHTML = "Cart: 1"
+                    window.localStorage.setItem("basket", 1)
+                    window.location.href = "basket.html?flowerId=" + curFlowerId
+                }
+
+                let imageURL = "images/" + flower.id + ".jpg"
+
+                    div.className = "card"
+                    let innerHTML = `
+
+                <img src="${imageURL}" alt="flower" style="width:100%">
+                <div class="container">
+                    <h4><b>${flower.name}</b></h4>
+                    <p>From&nbsp;${flower.price}</p>
+                </div>
+
+                    `
+                    div.innerHTML = innerHTML
+                    list.appendChild(div)
+            }
+        }
+    </script>
+</body>
+</html>

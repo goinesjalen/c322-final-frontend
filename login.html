@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="cards.css">
+    <link rel="stylesheet" href="login.css">
+  </head>
+  <body>
+    <hr color="purple">
+    <ul class="topnav">
+      <li><a  href="index.html"></a></li>
+      <li class="right"><a id="cart">Cart: 0</a></li>
+      <li class="right"><a href="login.html"><img src="loginimage.png" style="height: 35px; margin-top: -6px;"></a></li>
+      <li class="right"><a >Help</a></li>
+      <li class="right"><a href="orders.html">Track Order</a></li>
+    </ul>
+
+    <H1 style="text-align: center; color: black;">Sign Up To Save</H1>
+
+        <div class="login-wrap">
+          <div class="login-html">
+            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+            <div class="login-form">
+              <div class="sign-in-htm">
+                <div class="group">
+                  <label for="user" class="label">Username</label>
+                  <input id="username" type="text" class="input">
+                </div>
+                <div class="group">
+                  <label for="pass" class="label">Password</label>
+                  <input id="password" type="password" class="input" data-type="password">
+                </div>
+                <div class="group">
+                  <input type="submit" class="button" value="Log In" onclick="login()">
+                </div>
+                <div class="hr"></div>
+              </div>
+              <div class="sign-up-htm">
+                <div class="group">
+                  <label for="user" class="label">Username</label>
+                  <input id="username" type="text" class="input">
+                </div>
+                <div class="group">
+                  <label for="pass" class="label">Password</label>
+                  <input id="password" type="password" class="input" data-type="password">
+                </div>
+                <div class="group">
+                  <label for="pass" class="label">Email Address</label>
+                  <input id="email" type="text" class="input">
+                </div>
+                <div class="group">
+                  <input type="submit"  class="button" value="Create An Account" onclick="signup()">
+                </div>
+                <p style="text-align: center; color: black;">By Clicking "Create an Account" you agree to the Terms of Use and Privacy Policy</p>
+                <div class="hr"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <script src="configuration.js"></script>
+        <script src="register.js"></script>
+      </body>
+</html>
